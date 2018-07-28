@@ -26,7 +26,7 @@ contract BitPizzaContract {
         tickets[hashedSeed] = true;
         numCreatedTickets += 1;
 
-        return 'creation successful';
+        return "creation successful";
     }
 
     function claimTicket(string _seed) public returns(string) {
@@ -37,7 +37,7 @@ contract BitPizzaContract {
 
         tickets[hashedSeed] = false;
         numClaimedTickets += 1;
-        return 'claiming successful';
+        return "claiming successful";
     }
 
     function ticketStatus(string _seed) public view returns(bool) {
