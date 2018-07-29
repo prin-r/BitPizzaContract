@@ -56,6 +56,7 @@ export default class ContractInterface extends React.Component {
         console.log('Claimed pizza!!');
         return (this.state.contract)? this.state.contract.methods.claimTicket(str).send({ from: this.state.userAccount }) : null;
     };
+<<<<<<< HEAD
 
     // updateNum = (type) => {
     //   if(type === 'create') {
@@ -68,13 +69,19 @@ export default class ContractInterface extends React.Component {
     //     // this.contract.events.createTicketEvent();
     //   }
     // };
+=======
+>>>>>>> 77fc173881a70ecbaa46e8c875d7ca7302342eb5
 
     asking = (e,func) => {
         e.preventDefault();
         const action  = func;
         if (action) {
             action.then( (result) => {
+<<<<<<< HEAD
                 console.log('created -->', result[0], '  claimed --> ', result[1]);
+=======
+                this.setState({ numCreatedTickets: result[0], numClaimedTickets: result[1] });
+>>>>>>> 77fc173881a70ecbaa46e8c875d7ca7302342eb5
             }).catch(() => {
                 console.log('result error');
             });

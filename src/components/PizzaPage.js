@@ -42,7 +42,11 @@ export default class BitPage extends React.Component {
                 <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.page}/>
                 <form onSubmit={(e) => {this.sending(e, this.claimTicket)}}>
                     <input type='text' name="seed"/>
+<<<<<<< HEAD
                     <button>create ticket</button>
+=======
+                    <button>claim ticket</button>
+>>>>>>> 77fc173881a70ecbaa46e8c875d7ca7302342eb5
                 </form>
                 <Link to="/">
                   <button>Go to BitPage</button>
