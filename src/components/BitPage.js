@@ -7,9 +7,9 @@ export default class BitPage extends React.Component {
 
     page = 'bit';
 
-    acceptMethods = (createPizzaTicket) => {
+    acceptMethods = (createTicket) => {
       // Parent stores the method that the child passed
-      this.createPizzaTicket = createPizzaTicket;
+      this.createTicket = createTicket;
     };
 
     sending = (e,func) => {
@@ -41,7 +41,7 @@ export default class BitPage extends React.Component {
             <div>
                 <h1>Bit Dashboard</h1>
                 <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.page}/>
-                <form onSubmit={(e) => {this.sending(e, this.createPizzaTicket)}}>
+                <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
                     <input type='text' name="seed"/>
                     <button>create ticket</button>
                 </form>

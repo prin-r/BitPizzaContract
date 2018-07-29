@@ -2,7 +2,6 @@ import React from 'react';
 import Web3 from 'web3';
 import abi from './Abi';
 import getWeb3 from '../utils/getWeb3';
-import TicketForm from './ticketForm';
 
 export default class ContractInterface extends React.Component {
 
@@ -32,7 +31,7 @@ export default class ContractInterface extends React.Component {
 
     componentDidMount() {
       // Child passes its method to the parent
-      if(this.props.pageFromParent === 'bit') this.props.shareMethods(this.createPizzaTicket.bind(this));
+      if(this.props.pageFromParent === 'bit') this.props.shareMethods(this.createTicket.bind(this));
       else if(this.props.pageFromParent === 'pizza') this.props.shareMethods(this.claimTicket.bind(this));
       else console.log('Didn\'t pass any function!')
 
@@ -47,10 +46,10 @@ export default class ContractInterface extends React.Component {
         return (this.state.contract)? this.state.contract.methods.ticketsStatus().call() : null;
     };
 
-    createPizzaTicket = (str) => {
+    createTicket = (str) => {
         const hash = Web3.utils.soliditySha3(str);
         console.log('Create Pizza ', hash);
-        return (this.state.contract)? this.state.contract.methods.createPizzaTicket(hash).send({ from: this.state.userAccount }) : null;
+        return (this.state.contract)? this.state.contract.methods.createTicket(hash).send({ from: this.state.userAccount }) : null;
     };
 
     claimTicket = (str) => {
@@ -75,7 +74,7 @@ export default class ContractInterface extends React.Component {
         const action  = func;
         if (action) {
             action.then( (result) => {
-                console.log(result);
+                console.log('created -->', result[0], '  claimed --> ', result[1]);
             }).catch(() => {
                 console.log('result error');
             });
