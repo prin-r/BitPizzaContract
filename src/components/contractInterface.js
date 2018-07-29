@@ -1,7 +1,7 @@
 import React from 'react';
 import Web3 from 'web3';
 import abi from './Abi';
-import getWeb3 from './utils/getWeb3';
+import getWeb3 from '../utils/getWeb3';
 import TicketForm from './ticketForm';
 
 export default class ContractInterface extends React.Component {
@@ -20,7 +20,7 @@ export default class ContractInterface extends React.Component {
                 console.log(result[0]);
                 web3.eth.defaultAccount = result[0];
 
-                this.setState({ 
+                this.setState({
                     contract : new web3.eth.Contract(abi, this.state.contractAddress),
                     userAccount: result[0]
                 });
@@ -47,8 +47,6 @@ export default class ContractInterface extends React.Component {
     claimTicket = (str) => {
         return (this.state.contract)? this.state.contract.methods.claimTicket(str).send({ from: this.state.userAccount }) : null;
     }
-
-
 
     asking = (e,func) => {
         e.preventDefault();
@@ -120,4 +118,3 @@ export default class ContractInterface extends React.Component {
         );
     };
 }
-
