@@ -23,6 +23,11 @@ contract Ownable {
         _;
     }
     
+    modifier bitStudioOrPizzaSeller() {
+        require( (msg.sender == bitStudio) || (msg.sender == pizzaSeller));
+        _;
+    }
+    
     function transferBitStudioOwnership(address newOwner) public onlyBitStudio {
         require(newOwner != address(0));
         emit OwnershipBitStudioTransferred(bitStudio, newOwner);
