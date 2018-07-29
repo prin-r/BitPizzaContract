@@ -8,7 +8,7 @@ export default class ContractInterface extends React.Component {
 
     state = {
         // web3: null,
-        contractAddress :'0xd1e8731f761c68926925dc93d2ecb85e9cd9f54a',
+        contractAddress :'0x5bd5171f95b8fdde4ec7d837f93cb03e273247af',
         contract : null,
         userAccount: null,
         numCreatedTickets: 0,
@@ -42,18 +42,9 @@ export default class ContractInterface extends React.Component {
         return (this.state.contract)? this.state.contract.methods.testSha3(str).call() : null;
     };
 
-    numCreatedTickets = () => {
-        console.log('create num');
-        return (this.state.contract)? this.state.contract.methods.numCreatedTickets().call() : null;
-    };
-
-    numCreatedTickets = () => {
-        console.log('create num');
-        return (this.state.contract)? this.state.contract.methods.numCreatedTickets().call() : null;
-    };
-
-    numClaimedTickets = () => {
-        return (this.state.contract)? this.state.contract.methods.numClaimedTickets().call() : null;
+    getTicketsStat = () => {
+        console.log("get Ticket Stat");
+        return (this.state.contract)? this.state.contract.methods.ticketsStatus().call() : null;
     };
 
     createPizzaTicket = (str) => {
@@ -135,8 +126,7 @@ export default class ContractInterface extends React.Component {
                 <h1>Page is {this.props.pageFromParent}</h1>
                 <p>Created Ticket {this.state.numCreatedTickets}</p>
                 <p>Claimed Ticket {this.state.numClaimedTickets}</p>
-                <button onClick={(e) => {this.asking(e,this.numClaimedTickets())}}>check claimed</button>
-                <button onClick={(e) => {this.asking(e,this.numCreatedTickets())}}>check created</button>
+                <button onClick={(e) => {this.asking(e,this.getTicketsStat())}}>check created</button>
 
                 {/*}<form onSubmit={(e) => {this.sending(e,this.createPizzaTicket)}}>
                     <input type='text' name="seed"/>
