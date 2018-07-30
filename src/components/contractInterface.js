@@ -52,12 +52,12 @@ export default class ContractInterface extends React.Component {
         }
     };
 
-    checkTicketStatus = (e) => {
+    checkATicketStatus = (e) => {
         e.preventDefault();
         console.log('check ticket status');
         const value = e.target.seed.value;
-        if (this.state.contract) {
-          this.state.contract.methods.checkticketStatus(value).call().then(result => {
+        if (this.state.contract && value) {
+          this.state.contract.methods.checkATicketStatus(value).call().then(result => {
             console.log('result ',result);
           }).catch(err => {
             console.log(err);
@@ -124,7 +124,7 @@ export default class ContractInterface extends React.Component {
                 <p>Claimed Ticket {this.state.numClaimedTickets}</p>
                 <button onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
                 <button onClick={(e) => {this.getTicketsStat(e)}}>CheckTotalTicket</button>
-                <form onSubmit={(e) => {this.checkTicketStatus(e)}}>
+                <form onSubmit={(e) => {this.checkATicketStatus(e)}}>
                     <label>Check Ticket Status</label>
                     <input type='text' name="seed"/>
                     <button>Check</button>

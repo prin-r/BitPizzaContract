@@ -29,20 +29,6 @@ const ABI = [
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_nakeSeed",
-				"type": "string"
-			}
-		],
-		"name": "claimTicket",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
 				"name": "_bytesSeed",
 				"type": "bytes32"
 			}
@@ -52,6 +38,28 @@ const ABI = [
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_numCreatedTickets",
+				"type": "uint32"
+			},
+			{
+				"indexed": false,
+				"name": "_numClaimedTickets",
+				"type": "uint32"
+			},
+			{
+				"indexed": false,
+				"name": "_message",
+				"type": "string"
+			}
+		],
+		"name": "createTicketEvent",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -68,28 +76,6 @@ const ABI = [
 			}
 		],
 		"name": "resetContractSessionEndingEvent",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"name": "_sender",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "_endingTime",
-				"type": "uint64"
-			},
-			{
-				"indexed": false,
-				"name": "message",
-				"type": "string"
-			}
-		],
-		"name": "resetContractSessionOpeningEvent",
 		"type": "event"
 	},
 	{
@@ -136,37 +122,6 @@ const ABI = [
 		"inputs": [
 			{
 				"indexed": false,
-				"name": "_numCreatedTickets",
-				"type": "uint32"
-			},
-			{
-				"indexed": false,
-				"name": "_numClaimedTickets",
-				"type": "uint32"
-			},
-			{
-				"indexed": false,
-				"name": "_message",
-				"type": "string"
-			}
-		],
-		"name": "createTicketEvent",
-		"type": "event"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "pizzaSellerRequestForResetContract",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
 				"name": "_sender",
 				"type": "address"
 			},
@@ -178,6 +133,51 @@ const ABI = [
 		],
 		"name": "setNewDurationEvent",
 		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_sender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_endingTime",
+				"type": "uint64"
+			},
+			{
+				"indexed": false,
+				"name": "message",
+				"type": "string"
+			}
+		],
+		"name": "resetContractSessionOpeningEvent",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_nakeSeed",
+				"type": "string"
+			}
+		],
+		"name": "claimTicket",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "pizzaSellerRequestForResetContract",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"constant": false,
@@ -243,7 +243,7 @@ const ABI = [
 				"type": "string"
 			}
 		],
-		"name": "checkATicketStatus",
+		"name": "getATicketStatus",
 		"outputs": [
 			{
 				"name": "",
@@ -257,7 +257,7 @@ const ABI = [
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "checkingResetStatus",
+		"name": "getResetingStatus",
 		"outputs": [
 			{
 				"name": "",
@@ -287,8 +287,42 @@ const ABI = [
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "maxDuration",
+		"name": "getTicketsAndPackageStatus",
 		"outputs": [
+			{
+				"name": "",
+				"type": "uint32"
+			},
+			{
+				"name": "",
+				"type": "uint32"
+			},
+			{
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getTimeStatus",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint64"
+			},
+			{
+				"name": "",
+				"type": "uint64"
+			},
+			{
+				"name": "",
+				"type": "uint64"
+			},
 			{
 				"name": "",
 				"type": "uint64"
@@ -306,20 +340,6 @@ const ABI = [
 			{
 				"name": "",
 				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "resetingTime",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint64"
 			}
 		],
 		"payable": false,
@@ -347,38 +367,6 @@ const ABI = [
 		],
 		"payable": false,
 		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "ticketsStatus",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint32"
-			},
-			{
-				"name": "",
-				"type": "uint32"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "waitingDuration",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint64"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	}
 ]
