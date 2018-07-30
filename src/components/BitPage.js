@@ -69,14 +69,23 @@ export default class BitPage extends React.Component {
               <div className="body">
                 <div className="container">
                   <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
-                  <form className="form-inline" onSubmit={(e) => {this.sending(e, this.createTicket)}}>
-                      <input type='text' className="form-control" placeholder="Enter password" name="seed"/>
-                      <button className="btn btn-primary mb-2" >create ticket</button>
-                  </form>
-                  <button className="btn btn-primary" onClick={this.requestResetContract}>Request Rest By Bitstudio</button>
-                  <Link to="/pizza">
-                    <button className="btn btn-primary">Go to PizzaPage</button>
-                  </Link>
+                  <div className="row justify-content-md-center body-bar">
+                    <div className="col">
+                      <form className="form-inline" onSubmit={(e) => {this.sending(e, this.createTicket)}}>
+                          <label>Create Ticket</label>
+                          <input type='text' className="form-control" placeholder="Enter password" name="seed"/>
+                          <button className="btn btn-primary btn-lg" >create ticket</button>
+                      </form>
+                    </div>
+                    <div className="col">
+                      <button className="btn btn-primary btn-lg" onClick={this.requestResetContract}>Request Rest By Bitstudio</button>
+                    </div>
+                    <div className="col">
+                      <Link to="/pizza">
+                        <button className="btn btn-primary btn-lg">Go to PizzaPage</button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
