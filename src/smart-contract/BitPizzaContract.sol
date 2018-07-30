@@ -38,6 +38,15 @@ contract BitPizzaContract is Ownable {
         return (result, result.length);
     }
     
+    function tryToCloseResetingSession() private {
+        if (now < resetingTime) {
+            resetContractState();
+        } else {
+            resetSessionOnly();
+            emit resetContractSessionEndingEvent(msg.sender, "timeout! fail session was closed");
+        }
+    }
+    
     function resetSessionOnly() private {
         bitStudioRequestForReset = false;
         pizzaSellerRequestForReset = false;
@@ -68,35 +77,29 @@ contract BitPizzaContract is Ownable {
     
     function bitstudioRequestResetContract() public onlyBitStudio {
         if (pizzaSellerRequestForReset) {
-            if (now < resetingTime) {
-               resetContractState();
-            } else {
-                resetSessionOnly();
-                emit resetContractSessionEndingEvent(msg.sender, "fail to reset state of the contract");
-            }
-        } else if (! bitStudioRequestForReset) {
-            bitStudioRequestForReset = true;
-            resetingTime = waitingDuration.add64(uint64(now));
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening Bitstudio");
+            tryToCloseResetingSession();
         } else {
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "fail! session was already opened");
+            if (bitStudioRequestForReset) {
+                tryToCloseResetingSession();
+            } else {
+                bitStudioRequestForReset = true;
+                resetingTime = waitingDuration.add64(uint64(now));
+                emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening Bitstudio");
+            }
         }
     }
     
     function pizzaSellerRequestForResetContract() public onlyPizzaSeller {
         if (bitStudioRequestForReset) {
-            if (now < resetingTime) {
-               resetContractState(); 
-            } else {
-                resetSessionOnly();
-                emit resetContractSessionEndingEvent(msg.sender, "fail to reset state of the contract");
-            }
-        } else if (! pizzaSellerRequestForReset) {
-            pizzaSellerRequestForReset = true;
-            resetingTime = waitingDuration.add64(uint64(now));
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening by PizzaSeller");
+            tryToCloseResetingSession();
         } else {
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "fail! session was already opened");
+            if (pizzaSellerRequestForReset) {
+                tryToCloseResetingSession();
+            } else {
+                pizzaSellerRequestForReset = true;
+                resetingTime = waitingDuration.add64(uint64(now));
+                emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening by PizzaSeller");
+            }
         }
     }
     
@@ -120,13 +123,12 @@ contract BitPizzaContract is Ownable {
         emit claimTicketEvent(uint32(ticketsKeyTracker.length), numClaimedTickets, "claiming successful");
     }
     
-    function checkingResetStatus() public view returns(uint64, bool, string) {
-        bool isResetingSessionOpened = now < resetingTime;
-        string memory message = (isResetingSessionOpened)? "opening" : "closed";
-        return (resetingTime, isResetingSessionOpened, message);
+    function checkingResetStatus() public view returns(uint64, uint64, bool, bool, string) {
+        string memory message = (now < resetingTime)? "opening" : "closed";
+        return (resetingTime, uint64(now), bitStudioRequestForReset, pizzaSellerRequestForReset, message);
     }
     
-    function checkticketStatus(string _nakeSeed) public view onlyProperString(_nakeSeed) returns(bool) {
+    function checkATicketStatus(string _nakeSeed) public view onlyProperString(_nakeSeed) returns(bool) {
         bytes32 bytesSeed = keccak256(bytes(_nakeSeed));
         return tickets[bytesSeed];
     }
