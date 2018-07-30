@@ -103,23 +103,38 @@ export default class ContractInterface extends React.Component {
 
     render(props) {
         return (
-            <div>
-                <h1>Page is {this.props.pageFromParent}</h1>
-                <p>Created Ticket {this.state.numCreatedTickets}</p>
-                <p>Claimed Ticket {this.state.numClaimedTickets}</p>
-                <button onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
-                <button onClick={(e) => {this.getTicketsStat(e)}}>CheckCreated</button>
+            <div className="container">
+                {/*<h1>Page is {this.props.pageFromParent}</h1>*/}
+                <div className="row">
+                  <div className="col">
+                    <div className="p-3 mb-2 bg-secondary text-white">Created Ticket: {this.state.numCreatedTickets}</div>
+                  </div>
+                  <div className="col">
+                    <div className="p-3 mb-2 bg-secondary text-white">Claimed Ticket: {this.state.numClaimedTickets}</div>
+                  </div>
+                </div>
+
+                <div class="btn-group" role="group" aria-label="Check Ticket Status">
+                  <button type="button" className="btn btn-primary" onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
+                  <button type="button" className="btn btn-primary" onClick={(e) => {this.getTicketsStat(e)}}>CheckCreated</button>
+                </div>
+
                 <form onSubmit={(e) => {this.checkTicketStatus(e)}}>
-                    <label>Check Ticket Status</label>
-                    <input type='text' name="seed"/>
-                    <button>Check</button>
+                  <div className="form-group">
+                    <label className="">Check Ticket Status</label>
+                    <input type='text' className="form-control" aria-describedby="checkHelp" placeholder="Enter Key" name="seed"/>
+                    <div class="invalid-feedback">
+                      Please choose a username.
+                    </div>
+                    <button type="button" className="btn btn-primary">Check Status</button>
+                  </div>
                 </form>
+
                 <form onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
                     <label>Set New Reseting Duration</label>
                     <input type='text' name="seed"/>
                     <button>Set</button>
                 </form>
-
             </div>
         );
     };

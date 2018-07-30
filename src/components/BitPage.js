@@ -39,20 +39,22 @@ export default class BitPage extends React.Component {
         }
     }
 
-    
-
     render() {
         return (
-            <div>
-                <h1>Bit Dashboard</h1>
-                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
-                <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
-                    <input type='text' name="seed"/>
-                    <button>create ticket</button>
-                </form>
-                <Link to="/pizza">
-                  <button>Go to PizzaPage</button>
-                </Link>
+            <div className="container">
+              <div className="row justify-content-md-center">
+                <div className="col-md-6 col-md-offset-2">
+                  <h1 className="display-4">Bitstudio Dashboard</h1>
+                  <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
+                  <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
+                      <input type='text' name="seed"/>
+                      <button>create ticket</button>
+                  </form>
+                  <Link to="/pizza">
+                    <button>Go to PizzaPage</button>
+                  </Link>
+                </div>
+              </div>
             </div>
         );
     }
