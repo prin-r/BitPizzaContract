@@ -7,11 +7,7 @@ export default class BitPage extends React.Component {
 
     state = {
       page: 'bit',
-<<<<<<< HEAD
-    };
-=======
     }
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
 
     acceptMethods = (createTicket, bitstudioRequestResetContract) => {
       // Parent stores the method that the child passed
@@ -63,36 +59,23 @@ export default class BitPage extends React.Component {
 
     render() {
         return (
-<<<<<<< HEAD
             <div className="container-fluid">
               <div className="row justify-content-md-center">
                 <div className="col-md-6 bg-secondary">
-                  <h1 className="display-4 bg-dark text-white text-center">Bitstudio Dashboard</h1>
+                  <div className="header">
+                    <h1 className="header--title display-4 text-center">Bitstudio Dashboard</h1>
+                  </div>
                   <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
                   <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
                       <input type='text' name="seed"/>
                       <button>create ticket</button>
                   </form>
+                  <button className="btn btn-primary" onClick={this.requestResetContract}>Request Rest By Bitstudio</button>
                   <Link to="/pizza">
                     <button>Go to PizzaPage</button>
                   </Link>
                 </div>
               </div>
-=======
-            <div>
-                <h1>Bit Dashboard</h1>
-                <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
-                    <input type='text' name="seed"/>
-                    <button>create ticket</button>
-                </form>
-                <button onClick={this.requestResetContract}>Request Rest By Bitstudio</button>
-                <Link to="/pizza">
-                  <button>Go to PizzaPage</button>
-                </Link>
-
-                <h1>Ticket Information</h1>
-                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
             </div>
         );
     }

@@ -11,11 +11,7 @@ export default class BitPage extends React.Component {
       numClaimedTickets: 0,
     };
 
-<<<<<<< HEAD
-    acceptMethods = (claimTicket) => {
-=======
     acceptMethods = (claimTicket, pizzaSellerRequestForResetContract) => {
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
       // Parent stores the method that the child passed
       this.claimTicket = claimTicket;
       this.pizzaSellerRequestForResetContract = pizzaSellerRequestForResetContract;
@@ -66,10 +62,6 @@ export default class BitPage extends React.Component {
         return (
             <div>
                 <h1>Pizza Dashboard</h1>
-<<<<<<< HEAD
-                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page} />
-=======
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
                 <form onSubmit={(e) => {this.sending(e, this.claimTicket)}}>
                     <input type='text' name="seed"/>
                     <button>claim ticket</button>

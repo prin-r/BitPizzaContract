@@ -78,18 +78,6 @@ export default class ContractInterface extends React.Component {
 
     setResetingSessionDuration = (e) => {
         e.preventDefault();
-<<<<<<< HEAD
-        console.log('want to set new resseting duration');
-        const value = parseInt(e.target.seed.value);
-        if (this.state.contract) {
-            this.state.contract.methods.setResetingSessionDuration(value).send({ from: this.state.userAccount }).on('receipt', (receipt) => {
-              const data = receipt.events.setNewDurationEvent.returnValues;
-              console.log('sender: ', data[0], ' duration: ', data[1]);
-            }).on('error', err => console.log(err));
-        }
-    }
-
-=======
         const value = parseInt(e.target.seed.value);
         if (this.state.contract && Number.isInteger(value)) {
             console.log('want to set new resseting duration');
@@ -104,7 +92,6 @@ export default class ContractInterface extends React.Component {
     }
 
     // For Bitstudio Page
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
     createTicket = (str) => {
         const hash = Web3.utils.soliditySha3(str);
         console.log('Want to create Pizza ', hash);
@@ -122,19 +109,14 @@ export default class ContractInterface extends React.Component {
         return (this.state.contract)? this.state.contract.methods.claimTicket(str).send({ from: this.state.userAccount }) : null;
     };
 
-<<<<<<< HEAD
-=======
     pizzaSellerRequestForResetContract = () => {
         console.log('Pizza want to reset');
         return (this.state.contract) ? this.state.contract.methods.pizzaSellerRequestForResetContract().send({ from: this.state.userAccount}) : null;
     }
 
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
-
 
     render(props) {
         return (
-<<<<<<< HEAD
             <div className="container">
                 {/*<h1>Page is {this.props.pageFromParent}</h1>*/}
                 <div className="row">
@@ -157,28 +139,11 @@ export default class ContractInterface extends React.Component {
                   <button className="btn btn-primary">Check Status</button>
                 </form>
 
-=======
-            <div>
-                <h2>Page is {this.props.pageFromParent}</h2>
-                <p>Created Ticket {this.state.numCreatedTickets}</p>
-                <p>Claimed Ticket {this.state.numClaimedTickets}</p>
-                <button onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
-                <button onClick={(e) => {this.getTicketsStat(e)}}>CheckTotalTicket</button>
-                <form onSubmit={(e) => {this.checkTicketStatus(e)}}>
-                    <label>Check Ticket Status</label>
-                    <input type='text' name="seed"/>
-                    <button>Check</button>
-                </form>
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
                 <form onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
                     <label>Set New Reseting Duration</label>
                     <input type='text' name="seed"/>
                     <button>Set</button>
                 </form>
-<<<<<<< HEAD
-=======
-
->>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
             </div>
         );
     };
