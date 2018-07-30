@@ -7,7 +7,7 @@ export default class ContractInterface extends React.Component {
 
     state = {
         // web3: null,
-        contractAddress :'0x5bd5171f95b8fdde4ec7d837f93cb03e273247af',
+        contractAddress :'0x0202eb09c733ee905a2168398ae831f25bdd2c6e',
         contract : null,
         userAccount: null,
         numCreatedTickets: 0,
