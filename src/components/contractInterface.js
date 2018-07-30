@@ -7,7 +7,7 @@ export default class ContractInterface extends React.Component {
 
     state = {
         // web3: null,
-        contractAddress :'0x0202eb09c733ee905a2168398ae831f25bdd2c6e',
+        contractAddress :'0xaec0108dc2407190316cb011efd2c75ebf0d3bde',
         contract : null,
         userAccount: null,
         numCreatedTickets: 0,
@@ -44,20 +44,20 @@ export default class ContractInterface extends React.Component {
     getTicketsStat = () => {
         console.log("get Ticket Stat");
         if (this.state.contract) {
-          this.state.contract.methods.ticketsStatus().call().then(result => {
-            console.log('created -->', result[0], '  claimed --> ', result[1]);
+          this.state.contract.methods.getTicketsAndPackageStatus().call().then(result => {
+            console.log('packageIndex -->', result[0], '  numCreate --> ', result[1],'  numClaim --> ', result[2]);
           }).catch(err => {
             console.log(err);
           });
         }
     };
 
-    checkATicketStatus = (e) => {
+    getATicketStatus = (e) => {
         e.preventDefault();
         console.log('check ticket status');
         const value = e.target.seed.value;
         if (this.state.contract && value) {
-          this.state.contract.methods.checkATicketStatus(value).call().then(result => {
+          this.state.contract.methods.getATicketStatus(value).call().then(result => {
             console.log('result ',result);
           }).catch(err => {
             console.log(err);
@@ -65,11 +65,11 @@ export default class ContractInterface extends React.Component {
         }
     }
 
-    checkingResetStatus = () => {
+    getResetingStatus = () => {
         console.log('check reset status');
         if (this.state.contract) {
-          this.state.contract.methods.checkingResetStatus().call().then(result => {
-            console.log(result[2]);
+          this.state.contract.methods.getResetingStatus().call().then(result => {
+            console.log('now -->', result[1], 'resetting time --> ', result[0],'bit --> ', result[2], 'pizza -->', result[3], result[4]);
           }).catch(err => {
             console.log(err);
           });
@@ -122,9 +122,9 @@ export default class ContractInterface extends React.Component {
                 <h2>Page is {this.props.pageFromParent}</h2>
                 <p>Created Ticket {this.state.numCreatedTickets}</p>
                 <p>Claimed Ticket {this.state.numClaimedTickets}</p>
-                <button onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
+                <button onClick={(e) => {this.getResetingStatus(e)}}>CheckResetStatus</button>
                 <button onClick={(e) => {this.getTicketsStat(e)}}>CheckTotalTicket</button>
-                <form onSubmit={(e) => {this.checkATicketStatus(e)}}>
+                <form onSubmit={(e) => {this.getATicketStatus(e)}}>
                     <label>Check Ticket Status</label>
                     <input type='text' name="seed"/>
                     <button>Check</button>
