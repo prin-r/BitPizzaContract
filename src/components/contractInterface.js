@@ -114,20 +114,15 @@ export default class ContractInterface extends React.Component {
                   </div>
                 </div>
 
-                <div class="btn-group" role="group" aria-label="Check Ticket Status">
+                <div className="btn-group" role="group" aria-label="Check Ticket Status">
                   <button type="button" className="btn btn-primary" onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
                   <button type="button" className="btn btn-primary" onClick={(e) => {this.getTicketsStat(e)}}>CheckCreated</button>
                 </div>
 
                 <form onSubmit={(e) => {this.checkTicketStatus(e)}}>
-                  <div className="form-group">
-                    <label className="">Check Ticket Status</label>
-                    <input type='text' className="form-control" aria-describedby="checkHelp" placeholder="Enter Key" name="seed"/>
-                    <div class="invalid-feedback">
-                      Please choose a username.
-                    </div>
-                    <button type="button" className="btn btn-primary">Check Status</button>
-                  </div>
+                  <label>Check Ticket Status</label>
+                  <input type='text' className="form-control" aria-describedby="checkHelp" placeholder="Enter Key" name="seed"/>
+                  <button className="btn btn-primary">Check Status</button>
                 </form>
 
                 <form onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
