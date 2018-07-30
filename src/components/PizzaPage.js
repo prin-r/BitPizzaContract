@@ -4,8 +4,13 @@ import ABI from './Abi'
 import { Link } from 'react-router-dom';
 
 export default class BitPage extends React.Component {
-    page = 'pizza';
-    
+
+    state = {
+      page: 'pizza',
+      numCreatedTickets: 0,
+      numClaimedTickets: 0,
+    };
+
     acceptMethods = (claimTicket) => {
       // Parent stores the method that the child passed
       this.claimTicket = claimTicket;
@@ -18,12 +23,13 @@ export default class BitPage extends React.Component {
             const action  = func(strInput);
             if (action) {
                 action.on("receipt", (receipt) => {
-                    console.log("Successfully");
-                    // Transaction was accepted into the blockchain, let's redraw the UI
-                    })
-                    .on("error", (error) => {
-                    // Do something to alert the user their transaction has failed
-                    console.log(error);
+                  // console.log(receipt);
+                  const data = receipt.events.claimTicketEvent.returnValues;
+                  console.log(data[2]);
+                  this.setState({numCreatedTickets: data[0], numClaimedTickets: data[1]});
+                }).on("error", (error) => {
+                  // Do something to alert the user their transaction has failed
+                  console.log(error);
                 });
             }
             else {
@@ -39,14 +45,10 @@ export default class BitPage extends React.Component {
         return (
             <div>
                 <h1>Pizza Dashboard</h1>
-                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.page}/>
+                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page} />
                 <form onSubmit={(e) => {this.sending(e, this.claimTicket)}}>
                     <input type='text' name="seed"/>
-<<<<<<< HEAD
-                    <button>create ticket</button>
-=======
                     <button>claim ticket</button>
->>>>>>> 77fc173881a70ecbaa46e8c875d7ca7302342eb5
                 </form>
                 <Link to="/">
                   <button>Go to BitPage</button>

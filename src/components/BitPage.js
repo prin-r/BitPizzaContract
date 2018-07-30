@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 
 export default class BitPage extends React.Component {
 
-    page = 'bit';
+    state = {
+      page: 'bit',
+    }
 
     acceptMethods = (createTicket) => {
       // Parent stores the method that the child passed
@@ -19,12 +21,13 @@ export default class BitPage extends React.Component {
             const action  = func(strInput);
             if (action) {
                 action.on("receipt", (receipt) => {
-                    console.log("Successfully");
-                    // Transaction was accepted into the blockchain, let's redraw the UI
-                    })
-                    .on("error", (error) => {
-                    // Do something to alert the user their transaction has failed
-                    console.log(error);
+                  // console.log(receipt);
+                  const data = receipt.events.createTicketEvent.returnValues;
+                  console.log(data[2]);
+                  this.setState({numCreatedTickets: data[0], numClaimedTickets: data[1]});
+                }).on("error", (error) => {
+                  // Do something to alert the user their transaction has failed
+                  console.log(error);
                 });
             }
             else {
@@ -36,11 +39,13 @@ export default class BitPage extends React.Component {
         }
     }
 
+    
+
     render() {
         return (
             <div>
                 <h1>Bit Dashboard</h1>
-                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.page}/>
+                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
                 <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
                     <input type='text' name="seed"/>
                     <button>create ticket</button>
