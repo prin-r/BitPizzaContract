@@ -59,12 +59,15 @@ export default class BitPage extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
-              <div className="row justify-content-md-center">
-                <div className="col-md-6 bg-secondary">
-                  <div className="header">
-                    <h1 className="header--title display-4 text-center">Bitstudio Dashboard</h1>
-                  </div>
+            <div>
+              <div className="header">
+                <div className="container">
+                  <h1 className="header__title">Bitstudio Dashboard</h1>
+                  <h2 className="header__subtitle">Smart Contract for pizza</h2>
+                </div>
+              </div>
+              <div className="body">
+                <div className="container">
                   <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
                   <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
                       <input type='text' name="seed"/>

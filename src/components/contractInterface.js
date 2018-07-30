@@ -117,20 +117,20 @@ export default class ContractInterface extends React.Component {
 
     render(props) {
         return (
-            <div className="container">
+            <div>
                 {/*<h1>Page is {this.props.pageFromParent}</h1>*/}
                 <div className="row">
                   <div className="col">
-                    <div className="p-3 mb-2 bg-secondary text-white">Created Ticket: {this.state.numCreatedTickets}</div>
+                    <div className="p-1 mb-2 text-white">Created Ticket: {this.state.numCreatedTickets}</div>
                   </div>
                   <div className="col">
-                    <div className="p-3 mb-2 bg-secondary text-white">Claimed Ticket: {this.state.numClaimedTickets}</div>
+                    <div className="p-1 mb-2 text-white">Claimed Ticket: {this.state.numClaimedTickets}</div>
                   </div>
                 </div>
 
                 <div className="btn-group" role="group" aria-label="Check Ticket Status">
-                  <button type="button" className="btn btn-primary" onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
-                  <button type="button" className="btn btn-primary" onClick={(e) => {this.getTicketsStat(e)}}>CheckCreated</button>
+                  <button type="button" className="btn btn-primary btn-lg" onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
+                  <button type="button" className="btn btn-primary btn-lg" onClick={(e) => {this.getTicketsStat(e)}}>CheckCreated</button>
                 </div>
 
                 <form onSubmit={(e) => {this.checkTicketStatus(e)}}>
