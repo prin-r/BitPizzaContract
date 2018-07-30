@@ -51,7 +51,7 @@ export default class ContractInterface extends React.Component {
           });
         }
     };
-
+    
     getATicketStatus = (e) => {
         e.preventDefault();
         console.log('check ticket status');
@@ -64,6 +64,7 @@ export default class ContractInterface extends React.Component {
           });
         }
     }
+
 
     getResetingStatus = () => {
         console.log('check reset status');
@@ -117,7 +118,7 @@ export default class ContractInterface extends React.Component {
 
     render(props) {
         return (
-            <div>
+            <div className="container_inside">
                 {/*<h1>Page is {this.props.pageFromParent}</h1>*/}
                 <div className="row">
                   <div className="col">
@@ -129,21 +130,24 @@ export default class ContractInterface extends React.Component {
                 </div>
 
                 <div className="btn-group" role="group" aria-label="Check Ticket Status">
-                  <button type="button" className="btn btn-primary btn-lg" onClick={(e) => {this.getATicketStatus(e)}}>CheckResetStatus</button>
+                  <button type="button" className="btn btn-primary btn-lg" onClick={(e) => {this.getResetingStatus(e)}}>CheckResetStatus</button>
                   <button type="button" className="btn btn-primary btn-lg" onClick={(e) => {this.getTicketsStat(e)}}>CheckCreated</button>
                 </div>
-
-                {/*<form onSubmit={(e) => {this.checkTicketStatus(e)}}>
-                  <label>Check Ticket Status</label>
-                  <input type='text' className="form-control" aria-describedby="checkHelp" placeholder="Enter Key" name="seed"/>
-                  <button className="btn btn-primary">Check Status</button>
-                </form>*/}
-
-                <form onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
-                    <label>Set New Reseting Duration</label>
-                    <input type='text' name="seed"/>
-                    <button>Set</button>
-                </form>
+                
+                <div className="container-fluid">
+                    <div className="row ">
+                        <form className="form-inline" onSubmit={(e) => {this.getATicketStatus(e)}}>
+                            <label>Check Ticket Status</label>
+                            <input type='text' className="form-control" placeholder="Enter Key" name="seed"/>
+                            <button className="btn btn-primary">Check Status</button>
+                        </form>
+                        <form className="form-inline" onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
+                            <label>Set New Reseting Duration</label>
+                            <input type='text' className="form-control" placeholder="Enter the new duration" name="seed"/>
+                            <button className="btn btn-primary">Set</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         );
     };
