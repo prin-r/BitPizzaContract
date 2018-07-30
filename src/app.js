@@ -1,6 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-// import BitPizzaApp from './components/BitPizzaApp';
-import AppRouter from './routers/AppRouter';
+import React from 'react'
+import ReactDOM from 'react-dom'
+// import 'bootstrap'
+// import 'bootstrap/scss/bootstrap.scss'
+import AppRouter from './routers/AppRouter'
 
-ReactDOM.render(<AppRouter />, document.getElementById('app'));
+ReactDOM.render(<AppRouter />, document.getElementById('app'))
