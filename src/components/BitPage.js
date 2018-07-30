@@ -49,7 +49,7 @@ export default class BitPage extends React.Component {
                 console.log(data[2]);
                 console.log('sender: ', data[0], 'reseting time: ', data[1]);
             } else {
-                const data = receipt.events.resetContractSessionEndingEvent;
+                const data = receipt.events.resetContractSessionEndingEvent.returnValues;
                 console.log(data[1]);
                 console.log('sender: ', data[0]);
             }
