@@ -7,7 +7,7 @@ export default class ContractInterface extends React.Component {
 
     state = {
         // web3: null,
-        contractAddress :'0x5bd5171f95b8fdde4ec7d837f93cb03e273247af',
+        contractAddress :'0x0202eb09c733ee905a2168398ae831f25bdd2c6e',
         contract : null,
         userAccount: null,
         numCreatedTickets: 0,
@@ -32,8 +32,8 @@ export default class ContractInterface extends React.Component {
 
     componentDidMount() {
       // Child passes its method to the parent
-      if(this.props.pageFromParent === 'bit') this.props.shareMethods(this.createTicket.bind(this));
-      else if(this.props.pageFromParent === 'pizza') this.props.shareMethods(this.claimTicket.bind(this));
+      if(this.props.pageFromParent === 'bit') this.props.shareMethods(this.createTicket.bind(this), this.bitstudioRequestResetContract.bind(this));
+      else if(this.props.pageFromParent === 'pizza') this.props.shareMethods(this.claimTicket.bind(this), this.pizzaSellerRequestForResetContract.bind(this));
       else console.log('Didn\'t pass any function!')
     }
 
@@ -78,6 +78,7 @@ export default class ContractInterface extends React.Component {
 
     setResetingSessionDuration = (e) => {
         e.preventDefault();
+<<<<<<< HEAD
         console.log('want to set new resseting duration');
         const value = parseInt(e.target.seed.value);
         if (this.state.contract) {
@@ -88,21 +89,52 @@ export default class ContractInterface extends React.Component {
         }
     }
 
+=======
+        const value = parseInt(e.target.seed.value);
+        if (this.state.contract && Number.isInteger(value)) {
+            console.log('want to set new resseting duration');
+            this.state.contract.methods.setResetingSessionDuration(value).send({ from: this.state.userAccount })
+            .on('receipt', (receipt) => {
+              const data = receipt.events.setNewDurationEvent.returnValues;
+              console.log('sender: ', data[0], ' duration: ', data[1]);
+            }).on('error', err => console.log(err));
+        } else {
+            console.log('error! input must be an integer');
+        }
+    }
+
+    // For Bitstudio Page
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
     createTicket = (str) => {
         const hash = Web3.utils.soliditySha3(str);
         console.log('Want to create Pizza ', hash);
         return (this.state.contract)? this.state.contract.methods.createTicket(hash).send({ from: this.state.userAccount }) : null;
     };
 
+    bitstudioRequestResetContract = () => {
+        console.log('Bit want to reset');
+        return (this.state.contract) ? this.state.contract.methods.bitstudioRequestResetContract().send({ from: this.state.userAccount}) : null;
+    }
+
+    // For Pizza Page
     claimTicket = (str) => {
         console.log('want to claim pizza!!');
         return (this.state.contract)? this.state.contract.methods.claimTicket(str).send({ from: this.state.userAccount }) : null;
     };
 
+<<<<<<< HEAD
+=======
+    pizzaSellerRequestForResetContract = () => {
+        console.log('Pizza want to reset');
+        return (this.state.contract) ? this.state.contract.methods.pizzaSellerRequestForResetContract().send({ from: this.state.userAccount}) : null;
+    }
+
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
 
 
     render(props) {
         return (
+<<<<<<< HEAD
             <div className="container">
                 {/*<h1>Page is {this.props.pageFromParent}</h1>*/}
                 <div className="row">
@@ -125,11 +157,28 @@ export default class ContractInterface extends React.Component {
                   <button className="btn btn-primary">Check Status</button>
                 </form>
 
+=======
+            <div>
+                <h2>Page is {this.props.pageFromParent}</h2>
+                <p>Created Ticket {this.state.numCreatedTickets}</p>
+                <p>Claimed Ticket {this.state.numClaimedTickets}</p>
+                <button onClick={(e) => {this.checkingResetStatus(e)}}>CheckResetStatus</button>
+                <button onClick={(e) => {this.getTicketsStat(e)}}>CheckTotalTicket</button>
+                <form onSubmit={(e) => {this.checkTicketStatus(e)}}>
+                    <label>Check Ticket Status</label>
+                    <input type='text' name="seed"/>
+                    <button>Check</button>
+                </form>
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
                 <form onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
                     <label>Set New Reseting Duration</label>
                     <input type='text' name="seed"/>
                     <button>Set</button>
                 </form>
+<<<<<<< HEAD
+=======
+
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
             </div>
         );
     };

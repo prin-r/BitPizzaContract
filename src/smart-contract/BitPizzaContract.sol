@@ -37,7 +37,20 @@ contract BitPizzaContract is Ownable {
         bytes32 result = keccak256(bytes(_s));
         return (result, result.length);
     }
+<<<<<<< HEAD
 
+=======
+    
+    function tryToCloseResetingSession() private {
+        if (now < resetingTime) {
+            resetContractState();
+        } else {
+            resetSessionOnly();
+            emit resetContractSessionEndingEvent(msg.sender, "timeout! fail session was closed");
+        }
+    }
+    
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
     function resetSessionOnly() private {
         bitStudioRequestForReset = false;
         pizzaSellerRequestForReset = false;
@@ -68,35 +81,34 @@ contract BitPizzaContract is Ownable {
 
     function bitstudioRequestResetContract() public onlyBitStudio {
         if (pizzaSellerRequestForReset) {
-            if (now < resetingTime) {
-               resetContractState();
-            } else {
-                resetSessionOnly();
-                emit resetContractSessionEndingEvent(msg.sender, "fail to reset state of the contract");
-            }
-        } else if (! bitStudioRequestForReset) {
-            bitStudioRequestForReset = true;
-            resetingTime = waitingDuration.add64(uint64(now));
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening Bitstudio");
+            tryToCloseResetingSession();
         } else {
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "fail! session was already opened");
+            if (bitStudioRequestForReset) {
+                tryToCloseResetingSession();
+            } else {
+                bitStudioRequestForReset = true;
+                resetingTime = waitingDuration.add64(uint64(now));
+                emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening Bitstudio");
+            }
         }
     }
 
     function pizzaSellerRequestForResetContract() public onlyPizzaSeller {
         if (bitStudioRequestForReset) {
+<<<<<<< HEAD
             if (now < resetingTime) {
                resetContractState();
-            } else {
-                resetSessionOnly();
-                emit resetContractSessionEndingEvent(msg.sender, "fail to reset state of the contract");
-            }
-        } else if (! pizzaSellerRequestForReset) {
-            pizzaSellerRequestForReset = true;
-            resetingTime = waitingDuration.add64(uint64(now));
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening by PizzaSeller");
+=======
+            tryToCloseResetingSession();
         } else {
-            emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "fail! session was already opened");
+            if (pizzaSellerRequestForReset) {
+                tryToCloseResetingSession();
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
+            } else {
+                pizzaSellerRequestForReset = true;
+                resetingTime = waitingDuration.add64(uint64(now));
+                emit resetContractSessionOpeningEvent(msg.sender, resetingTime, "reseting session opening by PizzaSeller");
+            }
         }
     }
 
@@ -119,6 +131,7 @@ contract BitPizzaContract is Ownable {
 
         emit claimTicketEvent(uint32(ticketsKeyTracker.length), numClaimedTickets, "claiming successful");
     }
+<<<<<<< HEAD
 
     function checkingResetStatus() public view returns(uint64, bool, string) {
         bool isResetingSessionOpened = now < resetingTime;
@@ -127,6 +140,15 @@ contract BitPizzaContract is Ownable {
     }
 
     function checkticketStatus(string _nakeSeed) public view onlyProperString(_nakeSeed) returns(bool) {
+=======
+    
+    function checkingResetStatus() public view returns(uint64, uint64, bool, bool, string) {
+        string memory message = (now < resetingTime)? "opening" : "closed";
+        return (resetingTime, uint64(now), bitStudioRequestForReset, pizzaSellerRequestForReset, message);
+    }
+    
+    function checkATicketStatus(string _nakeSeed) public view onlyProperString(_nakeSeed) returns(bool) {
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
         bytes32 bytesSeed = keccak256(bytes(_nakeSeed));
         return tickets[bytesSeed];
     }

@@ -7,11 +7,16 @@ export default class BitPage extends React.Component {
 
     state = {
       page: 'bit',
+<<<<<<< HEAD
     };
+=======
+    }
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
 
-    acceptMethods = (createTicket) => {
+    acceptMethods = (createTicket, bitstudioRequestResetContract) => {
       // Parent stores the method that the child passed
       this.createTicket = createTicket;
+      this.bitstudioRequestResetContract = bitstudioRequestResetContract;
     };
 
     sending = (e,func) => {
@@ -39,8 +44,26 @@ export default class BitPage extends React.Component {
         }
     }
 
+    requestResetContract = () => {
+        this.bitstudioRequestResetContract().on("receipt", (receipt) => {
+            // console.log(receipt);
+            const dataOpen = receipt.events.resetContractSessionOpeningEvent;
+            if(dataOpen !== undefined) {
+                const data = dataOpen.returnValues;
+                console.log(data[2]);
+                console.log('sender: ', data[0], 'reseting time: ', data[1]);
+            } else {
+                const data = receipt.events.resetContractSessionEndingEvent;
+                console.log(data[1]);
+                console.log('sender: ', data[0]);
+            }
+        }).on("error", (error) => console.log(error));
+    }
+
+
     render() {
         return (
+<<<<<<< HEAD
             <div className="container-fluid">
               <div className="row justify-content-md-center">
                 <div className="col-md-6 bg-secondary">
@@ -55,6 +78,21 @@ export default class BitPage extends React.Component {
                   </Link>
                 </div>
               </div>
+=======
+            <div>
+                <h1>Bit Dashboard</h1>
+                <form onSubmit={(e) => {this.sending(e, this.createTicket)}}>
+                    <input type='text' name="seed"/>
+                    <button>create ticket</button>
+                </form>
+                <button onClick={this.requestResetContract}>Request Rest By Bitstudio</button>
+                <Link to="/pizza">
+                  <button>Go to PizzaPage</button>
+                </Link>
+
+                <h1>Ticket Information</h1>
+                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
+>>>>>>> ac99c9359ef5ac5a1002d8784ba232111ec66c02
             </div>
         );
     }
