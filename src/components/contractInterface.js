@@ -2,10 +2,6 @@ import React from 'react';
 import Web3 from 'web3';
 import abi from './Abi';
 import getWeb3 from '../utils/getWeb3';
-import TicketsStatus from './ticketsStatus';
-import ResettingStatus from './resettingStatus';
-import SetResetingSessionDuration from './SetResetingSessionDuration';
-import ATicketStatus from './ATicketStatus';
 
 export default class ContractInterface extends React.Component {
 
@@ -13,10 +9,9 @@ export default class ContractInterface extends React.Component {
         contractAddress :'0xaec0108dc2407190316cb011efd2c75ebf0d3bde',
         contract : null,
         userAccount: null,
-        duration: 0
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         getWeb3.then((result) => {
             const web3 = result.web3;
             web3.eth.getAccounts().then((result) => {
@@ -29,9 +24,22 @@ export default class ContractInterface extends React.Component {
             });
         });
         // Child passes its method to the parent
-        if(this.props.pageFromParent === 'bit') this.props.shareMethods(this.createTicket.bind(this), this.bitstudioRequestResetContract.bind(this));
-        else if(this.props.pageFromParent === 'pizza') this.props.shareMethods(this.claimTicket.bind(this), this.pizzaSellerRequestForResetContract.bind(this));
-        else console.log('Didn\'t pass any function!');
+        this.props.shareMethods(this.getAllFuncs());
+    }
+
+    getAllFuncs = () => {
+        return {
+            testSha3 : this.testSha3,
+            getTicketsStat : this.getTicketsStat,
+            getTimeStatus : this.getTimeStatus,
+            getResetingStatus : this.getResetingStatus,
+            getATicketStatus : this.getATicketStatus,
+            setResetingSessionDuration : this.setResetingSessionDuration,
+            createTicket : this.createTicket,
+            claimTicket : this.claimTicket,
+            bitstudioRequestResetContract : this.bitstudioRequestResetContract,
+            pizzaSellerRequestForResetContract : this.pizzaSellerRequestForResetContract
+        };
     }
 
     testSha3 = (str) => {
@@ -41,6 +49,10 @@ export default class ContractInterface extends React.Component {
     getTicketsStat = () => {
         return (this.state.contract) ? this.state.contract.methods.getTicketsAndPackageStatus().call() : undefined;
     };
+
+    getTimeStatus = () => {
+        return (this.state.contract) ? this.state.contract.methods.getTimeStatus().call() : undefined;
+    }
 
     getResetingStatus = () => {
         return (this.state.contract) ? this.state.contract.methods.getResetingStatus().call() : undefined;
@@ -77,19 +89,7 @@ export default class ContractInterface extends React.Component {
         return (this.state.contract) ? this.state.contract.methods.pizzaSellerRequestForResetContract().send({ from: this.state.userAccount}) : undefined;
     }
 
-
-    render(props) {
-        return (
-            <div className="container_inside">
-              <div>
-                <TicketsStatus content={this.getTicketsStat} />
-                <ResettingStatus content={this.getResetingStatus} />
-              </div>
-              <div className="row justify-content-md-center ">
-                <ATicketStatus content={this.getATicketStatus}/>
-                <SetResetingSessionDuration content={this.setResetingSessionDuration}/>
-              </div>
-            </div>
-        );
+    render() {
+        return (null);
     };
 }

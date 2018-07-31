@@ -2,18 +2,22 @@ import React from 'react';
 import ContractInterface from './contractInterface';
 import { Link } from 'react-router-dom';
 
+import TicketsStatus from './ticketsStatus';
+import ResettingStatus from './resettingStatus';
+import SetResetingSessionDuration from './SetResetingSessionDuration';
+import ATicketStatus from './ATicketStatus';
+
 export default class BitPage extends React.Component {
 
     state = {
       page: 'pizza',
       numCreatedTickets: 0,
-      numClaimedTickets: 0,
+      numClaimedTickets: 0
     };
 
-    acceptMethods = (claimTicket, pizzaSellerRequestForResetContract) => {
+    acceptMethods = (allFuncs) => {
       // Parent stores the method that the child passed
-      this.claimTicket = claimTicket;
-      this.pizzaSellerRequestForResetContract = pizzaSellerRequestForResetContract;
+      this.setState( allFuncs );
     };
 
     sending = (e,func) => {
@@ -69,16 +73,31 @@ export default class BitPage extends React.Component {
               <div className="body">
                 <div className="container">
                   <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
+                  <div className="container_inside">
+                    <div>
+                      <TicketsStatus content={this.state.getTicketsStat} />
+                      <ResettingStatus content={this.state.getResetingStatus} />
+                    </div>
+                    <div className="row justify-content-md-center ">
+                      <ATicketStatus content={this.state.getATicketStatus}/>
+                      <SetResetingSessionDuration
+                        content={({
+                          resetFunc: this.state.setResetingSessionDuration,
+                          getTimeFunc: this.state.getTimeStatus
+                        })}
+                      />
+                    </div>
+                  </div>
                   <div className="row justify-content-md-center body-bar">
                     <div className="col">
-                      <form className="form-inline" onSubmit={(e) => {this.sending(e, this.claimTicket)}}>
+                      <form className="form-inline" onSubmit={(e) => {this.sending(e, this.state.claimTicket)}}>
                           <label>Create Ticket</label>
-                          <input type='text' className="form-control" placeholder="Enter password" name="seed"/>
+                          <input type='text' className="form-control" placeholder="Enter new key" name="seed"/>
                           <button className="btn btn-primary btn-lg" >Claim ticket</button>
                       </form>
                     </div>
                     <div className="col">
-                      <button className="btn btn-primary btn-lg" onClick={this.requestResetContract}>Request Rest By Pizza</button>
+                      <button className="btn btn-primary btn-lg" onClick={this.state.requestResetContract}>Request Rest By Pizza</button>
                     </div>
                     <div className="col">
                       <Link to="/">
@@ -91,5 +110,4 @@ export default class BitPage extends React.Component {
             </div>
         );
     }
-
 };

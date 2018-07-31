@@ -7,22 +7,32 @@ class ATicketStatus extends React.Component {
     };
 
     callGetATicketStatus = (e) => {
-        if (this.state.isWaitingForResult) return;
-        this.setState({isWaitingForResult : true});
         e.preventDefault();
-        console.log('check ticket status');
-        const value = e.target.seed.value;
-        let func = this.props.content;
-        let funcCall = func(value);
-        if (funcCall && value) {
-            funcCall.then(result => {
-                console.log('result ',result);
-                this.setState({isWaitingForResult : false});
-            }).catch(err => {
-                console.log(err);
-                this.setState({isWaitingForResult : false});
-            });
+        if (this.state.isWaitingForResult) {
+            console.log('please wait for transaction');
+            return;
         }
+        
+        this.setState({isWaitingForResult : true}); 
+        const value = e.target.seed.value;
+        const func = this.props.content;
+        let funcCall = undefined;
+
+        if (func && value) {
+            funcCall = func(value);
+        } else {
+            console.log('error! input or func is invalid');
+            this.setState({isWaitingForResult : false});
+            return;
+        }
+
+        funcCall.then(result => {
+            console.log('result ',result);
+            this.setState({isWaitingForResult : false});
+        }).catch(err => {
+            console.log(err);
+            this.setState({isWaitingForResult : false});
+        });
     }
     
     render() {
