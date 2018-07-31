@@ -1,6 +1,5 @@
 import React from 'react';
 import ContractInterface from './contractInterface';
-import ABI from './Abi';
 import { Link } from 'react-router-dom';
 
 export default class BitPage extends React.Component {

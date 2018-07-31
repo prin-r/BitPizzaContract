@@ -4,6 +4,8 @@ import abi from './Abi';
 import getWeb3 from '../utils/getWeb3';
 import TicketsStatus from './ticketsStatus';
 import ResettingStatus from './resettingStatus';
+import SetResetingSessionDuration from './SetResetingSessionDuration';
+import ATicketStatus from './ATicketStatus';
 
 export default class ContractInterface extends React.Component {
 
@@ -37,68 +39,41 @@ export default class ContractInterface extends React.Component {
     };
 
     getTicketsStat = () => {
-        if (this.state.contract) {
-            return this.state.contract.methods.getTicketsAndPackageStatus().call();
-        }
-        return undefined;
+        return (this.state.contract) ? this.state.contract.methods.getTicketsAndPackageStatus().call() : undefined;
     };
 
-    getATicketStatus = (e) => {
-        e.preventDefault();
-        console.log('check ticket status');
-        const value = e.target.seed.value;
-        if (this.state.contract && value) {
-          this.state.contract.methods.getATicketStatus(value).call().then(result => {
-            console.log('result ',result);
-          }).catch(err => {
-            console.log(err);
-          });
-        }
-    }
-
     getResetingStatus = () => {
-        if (this.state.contract) {
-            return this.state.contract.methods.getResetingStatus().call();
-        }
-        return undefined;
+        return (this.state.contract) ? this.state.contract.methods.getResetingStatus().call() : undefined;
     }
 
-    setResetingSessionDuration = (e) => {
-        e.preventDefault();
-        const value = parseInt(e.target.seed.value);
-        if (this.state.contract && Number.isInteger(value)) {
-            console.log('want to set new resseting duration');
-            this.state.contract.methods.setResetingSessionDuration(value).send({ from: this.state.userAccount })
-            .on('receipt', (receipt) => {
-              const data = receipt.events.setNewDurationEvent.returnValues;
-              console.log('sender: ', data[0], ' duration: ', data[1]);
-              this.setState({duration: data[1]});
-            }).on('error', err => console.log(err));
-        } else {
-            console.log('error! input must be an integer');
-        }
+    getATicketStatus = (val) => {
+        return (this.state.contract) ? this.state.contract.methods.getATicketStatus(val).call() : undefined;
+    }
+
+    setResetingSessionDuration = (val) => {
+        return (this.state.contract) ? this.state.contract.methods.setResetingSessionDuration(val).send({ from: this.state.userAccount }) :  undefined;
     }
 
     // For Bitstudio Page
     createTicket = (str) => {
         const hash = Web3.utils.soliditySha3(str);
-        console.log('Want to create Pizza ', hash);
+        console.log('request for a new ticket', hash);
         return (this.state.contract)? this.state.contract.methods.createTicket(hash).send({ from: this.state.userAccount }) : undefined;
     };
 
     bitstudioRequestResetContract = () => {
-        console.log('Bit want to reset');
+        console.log('resetting was stared by Bit');
         return (this.state.contract) ? this.state.contract.methods.bitstudioRequestResetContract().send({ from: this.state.userAccount}) : undefined;
     }
 
     // For Pizza Page
     claimTicket = (str) => {
-        console.log('want to claim pizza!!');
+        console.log('request for claiming a ticket');
         return (this.state.contract) ? this.state.contract.methods.claimTicket(str).send({ from: this.state.userAccount }) : undefined;
     };
 
     pizzaSellerRequestForResetContract = () => {
-        console.log('Pizza want to reset');
+        console.log('resetting was start by Pizza');
         return (this.state.contract) ? this.state.contract.methods.pizzaSellerRequestForResetContract().send({ from: this.state.userAccount}) : undefined;
     }
 
@@ -111,20 +86,8 @@ export default class ContractInterface extends React.Component {
                 <ResettingStatus content={this.getResetingStatus} />
               </div>
               <div className="row justify-content-md-center ">
-                <div className="col-md-auto">
-                  <form className="form-inline" onSubmit={(e) => {this.getATicketStatus(e)}}>
-                      <label>Check Ticket Status</label>
-                      <input type='text' className="form-control" placeholder="Enter Key" name="seed"/>
-                      <button className="btn btn-primary btn-lg">Check Status</button>
-                  </form>
-                </div>
-                <div className="col-md-auto">
-                  <form className="form-inline" onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
-                      <label>Set New Reseting Duration</label>
-                      <input type='text' className="form-control" placeholder="Enter the new duration" name="seed"/>
-                      <button className="btn btn-primary btn-lg">Set</button>
-                  </form>
-                </div>
+                <ATicketStatus content={this.getATicketStatus}/>
+                <SetResetingSessionDuration content={this.setResetingSessionDuration}/>
               </div>
             </div>
         );
