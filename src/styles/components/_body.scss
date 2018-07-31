@@ -1,4 +1,9 @@
 .body {
   background-color: $dark-blue;
   font-size: $m-size;
+  padding: $m-size 0;
+}
+
+.body-bar {
+  padding: $m-size auto;
 }

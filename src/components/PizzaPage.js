@@ -61,18 +61,34 @@ export default class BitPage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Pizza Dashboard</h1>
-                <form onSubmit={(e) => {this.sending(e, this.claimTicket)}}>
-                    <input type='text' name="seed"/>
-                    <button>claim ticket</button>
-                </form>
-                <button onClick={this.requestResetContract}>Request Rest By Bitstudio</button>
-                <Link to="/">
-                  <button>Go to BitPage</button>
-                </Link>
-
-                <h1>Ticket Information</h1>
-                <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page} />
+              <div className="header">
+                <div className="container">
+                  <h1 className="header__title">Pizza Dashboard</h1>
+                  <h2 className="header__subtitle">Smart Contract for pizza</h2>
+                </div>
+              </div>
+              <div className="body">
+                <div className="container">
+                  <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
+                  <div className="row justify-content-md-center body-bar">
+                    <div className="col">
+                      <form className="form-inline" onSubmit={(e) => {this.sending(e, this.claimTicket)}}>
+                          <label>Create Ticket</label>
+                          <input type='text' className="form-control" placeholder="Enter password" name="seed"/>
+                          <button className="btn btn-primary btn-lg" >Claim ticket</button>
+                      </form>
+                    </div>
+                    <div className="col">
+                      <button className="btn btn-primary btn-lg" onClick={this.requestResetContract}>Request Rest By Pizza</button>
+                    </div>
+                    <div className="col">
+                      <Link to="/">
+                        <button className="btn btn-primary btn-lg">Go to BitstudioPage</button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
         );
     }

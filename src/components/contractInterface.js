@@ -42,7 +42,7 @@ export default class ContractInterface extends React.Component {
         }
         return undefined;
     };
-    
+
     getATicketStatus = (e) => {
         e.preventDefault();
         console.log('check ticket status');
@@ -106,23 +106,26 @@ export default class ContractInterface extends React.Component {
     render(props) {
         return (
             <div className="container_inside">
+              <div>
                 <TicketsStatus content={this.getTicketsStat} />
                 <ResettingStatus content={this.getResetingStatus} />
-                
-                <div className="container-fluid">
-                    <div className="row ">
-                        <form className="form-inline" onSubmit={(e) => {this.getATicketStatus(e)}}>
-                            <label>Check Ticket Status</label>
-                            <input type='text' className="form-control" placeholder="Enter Key" name="seed"/>
-                            <button className="btn btn-primary">Check Status</button>
-                        </form>
-                        <form className="form-inline" onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
-                            <label>Set New Reseting Duration</label>
-                            <input type='text' className="form-control" placeholder="Enter the new duration" name="seed"/>
-                            <button className="btn btn-primary">Set</button>
-                        </form>
-                    </div>
+              </div>
+              <div className="row justify-content-md-center ">
+                <div className="col-md-auto">
+                  <form className="form-inline" onSubmit={(e) => {this.getATicketStatus(e)}}>
+                      <label>Check Ticket Status</label>
+                      <input type='text' className="form-control" placeholder="Enter Key" name="seed"/>
+                      <button className="btn btn-primary btn-lg">Check Status</button>
+                  </form>
                 </div>
+                <div className="col-md-auto">
+                  <form className="form-inline" onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
+                      <label>Set New Reseting Duration</label>
+                      <input type='text' className="form-control" placeholder="Enter the new duration" name="seed"/>
+                      <button className="btn btn-primary btn-lg">Set</button>
+                  </form>
+                </div>
+              </div>
             </div>
         );
     };
