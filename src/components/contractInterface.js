@@ -23,6 +23,7 @@ export default class ContractInterface extends React.Component {
                 this.state.userAccount = result[0];
             });
         });
+
         // Child passes its method to the parent
         this.props.shareMethods(this.getAllFuncs());
     }
