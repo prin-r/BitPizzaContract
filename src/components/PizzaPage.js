@@ -73,13 +73,6 @@ export default class BitPage extends React.Component {
               <div className="body">
                 <div className="container">
                   <ContractInterface shareMethods={this.acceptMethods} pageFromParent={this.state.page}/>
-<<<<<<< HEAD
-                  <div className="row justify-content-md-center body-bar">
-                    <div className="col">
-                      <form className="form-inline" onSubmit={(e) => {this.sending(e, this.claimTicket)}}>
-                          <label>Create Ticket</label>
-                          <input type='text' className="form-control" placeholder="Enter password" name="seed"/>
-=======
                   <div className="container_inside">
                     <div>
                       <TicketsStatus content={this.state.getTicketsStat} />
@@ -100,16 +93,11 @@ export default class BitPage extends React.Component {
                       <form className="form-inline" onSubmit={(e) => {this.sending(e, this.state.claimTicket)}}>
                           <label>Create Ticket</label>
                           <input type='text' className="form-control" placeholder="Enter new key" name="seed"/>
->>>>>>> efaee45abc75e741545de6853ba6beb40141549e
-                          <button className="btn btn-primary btn-lg" >Claim ticket</button>
+                          <button className="btn btn-primary btn-lg">Claim ticket</button>
                       </form>
                     </div>
                     <div className="col">
-<<<<<<< HEAD
-                      <button className="btn btn-primary btn-lg" onClick={this.requestResetContract}>Request Rest By Pizza</button>
-=======
                       <button className="btn btn-primary btn-lg" onClick={this.state.requestResetContract}>Request Rest By Pizza</button>
->>>>>>> efaee45abc75e741545de6853ba6beb40141549e
                     </div>
                     <div className="col">
                       <Link to="/">

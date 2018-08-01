@@ -50,22 +50,8 @@ export default class ContractInterface extends React.Component {
         return (this.state.contract) ? this.state.contract.methods.getTicketsAndPackageStatus().call() : undefined;
     };
 
-<<<<<<< HEAD
-    getATicketStatus = (e) => {
-        e.preventDefault();
-        console.log('check ticket status');
-        const value = e.target.seed.value;
-        if (this.state.contract && value) {
-          this.state.contract.methods.getATicketStatus(value).call().then(result => {
-            console.log('result ',result);
-          }).catch(err => {
-            console.log(err);
-          });
-        }
-=======
     getTimeStatus = () => {
         return (this.state.contract) ? this.state.contract.methods.getTimeStatus().call() : undefined;
->>>>>>> efaee45abc75e741545de6853ba6beb40141549e
     }
 
     getResetingStatus = () => {
@@ -103,36 +89,7 @@ export default class ContractInterface extends React.Component {
         return (this.state.contract) ? this.state.contract.methods.pizzaSellerRequestForResetContract().send({ from: this.state.userAccount}) : undefined;
     }
 
-<<<<<<< HEAD
-
-    render(props) {
-        return (
-            <div className="container_inside">
-              <div>
-                <TicketsStatus content={this.getTicketsStat} />
-                <ResettingStatus content={this.getResetingStatus} />
-              </div>
-              <div className="row justify-content-md-center ">
-                <div className="col-md-auto">
-                  <form className="form-inline" onSubmit={(e) => {this.getATicketStatus(e)}}>
-                      <label>Check Ticket Status</label>
-                      <input type='text' className="form-control" placeholder="Enter Key" name="seed"/>
-                      <button className="btn btn-primary btn-lg">Check Status</button>
-                  </form>
-                </div>
-                <div className="col-md-auto">
-                  <form className="form-inline" onSubmit={(e) => {this.setResetingSessionDuration(e)}}>
-                      <label>Set New Reseting Duration</label>
-                      <input type='text' className="form-control" placeholder="Enter the new duration" name="seed"/>
-                      <button className="btn btn-primary btn-lg">Set</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-        );
-=======
     render() {
         return (null);
->>>>>>> efaee45abc75e741545de6853ba6beb40141549e
     };
 }
