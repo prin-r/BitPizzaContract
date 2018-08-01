@@ -27,16 +27,18 @@ class ResettingStatus extends React.Component {
 
     componentDidMount = () => {
         const savingState = this.getSaving();
-        const timeRemaining = parseInt(savingState.timeRemaining);   
-        const bitOpen = savingState.bitOpen;
-        const pizzaOpen = savingState.pizzaOpen;
-        const status = savingState.status;
-
-        savingState.timeRemaining = (Number.isInteger(timeRemaining)) ? timeRemaining : 0;    
-        savingState.bitOpen = bitOpen;
-        savingState.pizzaOpen = pizzaOpen;
-        savingState.status = status;
-        this.setState(savingState);
+        if (savingState) {
+            const timeRemaining = parseInt(savingState.timeRemaining);   
+            const bitOpen = savingState.bitOpen;
+            const pizzaOpen = savingState.pizzaOpen;
+            const status = savingState.status;
+    
+            savingState.timeRemaining = (Number.isInteger(timeRemaining)) ? timeRemaining : 0;    
+            savingState.bitOpen = bitOpen;
+            savingState.pizzaOpen = pizzaOpen;
+            savingState.status = status;
+            this.setState(savingState);
+        }
     }
 
     componentDidUpdate = () => {
