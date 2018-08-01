@@ -1,12 +1,11 @@
 import React from 'react';
-import ContractInterface from './contractInterface';
 import { Link } from 'react-router-dom';
-import { all } from '../../node_modules/any-promise';
 
-import TicketsStatus from './ticketsStatus';
-import ResettingStatus from './resettingStatus';
-import SetResetingSessionDuration from './SetResetingSessionDuration';
-import ATicketStatus from './ATicketStatus';
+import ContractInterface from './ContractInterface';
+import TicketsStatus from './TicketsStatus';
+import ResettingStatus from './ResettingStatus';
+import TimeStatus from './TimeStatus';
+import ContractActionForm from './ContractActionForm';
 
 export default class BitPage extends React.Component {
 
@@ -18,31 +17,6 @@ export default class BitPage extends React.Component {
       // Parent stores the method that the child passed
       this.setState( allFuncs );
     };
-
-    sending = (e,func) => {
-        e.preventDefault();
-        const strInput = e.target.seed.value.trim();
-        if (strInput && strInput !== "") {
-            const action  = func(strInput);
-            if (action) {
-                action.on("receipt", (receipt) => {
-                  // console.log(receipt);
-                  const data = receipt.events.createTicketEvent.returnValues;
-                  console.log(data[2]);
-                  this.setState({numCreatedTickets: data[0], numClaimedTickets: data[1]});
-                }).on("error", (error) => {
-                  // Do something to alert the user their transaction has failed
-                  console.log(error);
-                });
-            }
-            else {
-                console.log('action error');
-            }
-        }
-        else {
-            console.log('input is invalid');
-        }
-    }
 
     requestResetContract = () => {
         this.bitstudioRequestResetContract().on("receipt", (receipt) => {
@@ -78,23 +52,15 @@ export default class BitPage extends React.Component {
                       <ResettingStatus content={this.state.getResetingStatus} />
                     </div>
                     <div className="row justify-content-md-center ">
-                      <ATicketStatus content={this.state.getATicketStatus}/>
-                      <SetResetingSessionDuration
-                        content={({
-                          resetFunc: this.state.setResetingSessionDuration,
-                          getTimeFunc: this.state.getTimeStatus
-                        })}
-                      />
+                      <ContractActionForm content={this.state.getATicketStatus} name={"check a ticket"} placeholder={"key"}/>
+                      <TimeStatus content={this.state.getTimeStatus}/>
+                      <ContractActionForm content={this.state.setResetingSessionDuration} name={"set duration"} placeholder={"new duration"}/>
                     </div>
                   </div>
                   <div className="row justify-content-md-center body-bar">
-                    <div className="col">
-                      <form className="form-inline" onSubmit={(e) => {this.sending(e, this.state.createTicket)}}>
-                          <label>Create Ticket</label>
-                          <input type='text' className="form-control" placeholder="Enter new key" name="seed"/>
-                          <button className="btn btn-primary btn-lg" >create ticket</button>
-                      </form>
-                    </div>
+                    
+                    <ContractActionForm content={this.state.createTicket} name={"create ticket"} placeholder={"new key"}/>
+
                     <div className="col">
                       <button className="btn btn-primary btn-lg" onClick={this.state.requestResetContract}>Request Rest By Bitstudio</button>
                     </div>

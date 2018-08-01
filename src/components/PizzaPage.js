@@ -1,49 +1,22 @@
 import React from 'react';
-import ContractInterface from './contractInterface';
 import { Link } from 'react-router-dom';
 
-import TicketsStatus from './ticketsStatus';
-import ResettingStatus from './resettingStatus';
-import SetResetingSessionDuration from './SetResetingSessionDuration';
-import ATicketStatus from './ATicketStatus';
+import ContractInterface from './ContractInterface';
+import TicketsStatus from './TicketsStatus';
+import ResettingStatus from './ResettingStatus';
+import TimeStatus from './TimeStatus';
+import ContractActionForm from './ContractActionForm';
 
 export default class BitPage extends React.Component {
 
     state = {
-      page: 'pizza',
-      numCreatedTickets: 0,
-      numClaimedTickets: 0
+      page: 'pizza'
     };
 
     acceptMethods = (allFuncs) => {
       // Parent stores the method that the child passed
       this.setState( allFuncs );
     };
-
-    sending = (e,func) => {
-        e.preventDefault();
-        const strInput = e.target.seed.value.trim();
-        if (strInput && strInput !== "") {
-            const action  = func(strInput);
-            if (action) {
-                action.on("receipt", (receipt) => {
-                  // console.log(receipt);
-                  const data = receipt.events.claimTicketEvent.returnValues;
-                  console.log(data[2]);
-                  this.setState({numCreatedTickets: data[0], numClaimedTickets: data[1]});
-                }).on("error", (error) => {
-                  // Do something to alert the user their transaction has failed
-                  console.log(error);
-                });
-            }
-            else {
-                console.log('action error');
-            }
-        }
-        else {
-            console.log('input is invalid');
-        }
-    }
 
     requestResetContract = () => {
         this.pizzaSellerRequestForResetContract().on("receipt", (receipt) => {
@@ -79,16 +52,13 @@ export default class BitPage extends React.Component {
                       <ResettingStatus content={this.state.getResetingStatus} />
                     </div>
                     <div className="row justify-content-md-center ">
-                      <ATicketStatus content={this.state.getATicketStatus}/>
-                      <SetResetingSessionDuration
-                        content={({
-                          resetFunc: this.state.setResetingSessionDuration,
-                          getTimeFunc: this.state.getTimeStatus
-                        })}
-                      />
+                      <ContractActionForm content={this.state.getATicketStatus} name={"check a ticket"} placeholder={"key"}/>
+                      <TimeStatus content={this.state.getTimeStatus}/>
+                      <ContractActionForm content={this.state.setResetingSessionDuration} name={"set duration"} placeholder={"new duration"}/>
                     </div>
                   </div>
                   <div className="row justify-content-md-center body-bar">
+<<<<<<< HEAD
                     <div className="col">
                       <form className="form-inline" onSubmit={(e) => {this.sending(e, this.state.claimTicket)}}>
                           <label>Create Ticket</label>
@@ -96,6 +66,11 @@ export default class BitPage extends React.Component {
                           <button className="btn btn-primary btn-lg">Claim ticket</button>
                       </form>
                     </div>
+=======
+
+                    <ContractActionForm  content={this.state.claimTicket}  name={"claim ticket"} placeholder={"key"}/>
+
+>>>>>>> 23bcefea62954945e6c85c7191188fd585def4d9
                     <div className="col">
                       <button className="btn btn-primary btn-lg" onClick={this.state.requestResetContract}>Request Rest By Pizza</button>
                     </div>
