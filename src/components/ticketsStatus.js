@@ -13,11 +13,13 @@ class TicketsStatus extends React.Component {
 
     componentDidMount = () => {
         const savingState = this.getSaving();
-        Object.keys(savingState).map((key, index) => {
-            const val = parseInt(savingState[key]);
-            savingState[key] = (Number.isInteger(val)) ? val : 0;;
-        });         
-        this.setState(savingState);
+        if (savingState) {
+            Object.keys(savingState).map((key, index) => {
+                const val = parseInt(savingState[key]);
+                savingState[key] = (Number.isInteger(val)) ? val : 0;;
+            });         
+            this.setState(savingState);
+        }
     }
 
     componentWillUnmount = () => {
