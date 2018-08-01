@@ -58,19 +58,9 @@ export default class BitPage extends React.Component {
                     </div>
                   </div>
                   <div className="row justify-content-md-center body-bar">
-<<<<<<< HEAD
-                    <div className="col">
-                      <form className="form-inline" onSubmit={(e) => {this.sending(e, this.state.claimTicket)}}>
-                          <label>Create Ticket</label>
-                          <input type='text' className="form-control" placeholder="Enter new key" name="seed"/>
-                          <button className="btn btn-primary btn-lg">Claim ticket</button>
-                      </form>
-                    </div>
-=======
 
                     <ContractActionForm  content={this.state.claimTicket}  name={"claim ticket"} placeholder={"key"}/>
 
->>>>>>> 23bcefea62954945e6c85c7191188fd585def4d9
                     <div className="col">
                       <button className="btn btn-primary btn-lg" onClick={this.state.requestResetContract}>Request Rest By Pizza</button>
                     </div>
