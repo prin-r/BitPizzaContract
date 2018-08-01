@@ -25,6 +25,28 @@ class ResettingStatus extends React.Component {
         clearInterval(this.timer);
     }
 
+    componentDidMount = () => {
+        const savingState = this.getSaving();
+        const timeRemaining = parseInt(savingState.timeRemaining);   
+        const bitOpen = savingState.bitOpen;
+        const pizzaOpen = savingState.pizzaOpen;
+        const status = savingState.status;
+
+        savingState.timeRemaining = (Number.isInteger(timeRemaining)) ? timeRemaining : 0;    
+        savingState.bitOpen = bitOpen;
+        savingState.pizzaOpen = pizzaOpen;
+        savingState.status = status;
+        this.setState(savingState);
+    }
+
+    componentDidUpdate = () => {
+        localStorage.setItem("ResettingStatus_state", JSON.stringify(this.state));
+    }
+
+    getSaving = () => {
+        return JSON.parse(localStorage.getItem("ResettingStatus_state"));
+    }
+
     getContractStateInterval = () => {
         let func = this.props.content();
         if (func) {

@@ -4,15 +4,32 @@ class TicketsStatus extends React.Component {
     state = {
         currentPackageIndex: 0,
         numCreatedTickets: 0,
-        numClaimedTickets: 0,
+        numClaimedTickets: 0
     };
 
     componentWillMount = () => {
         this.timer = setInterval(this.getContractStateInterval, 5000);
     }
 
+    componentDidMount = () => {
+        const savingState = this.getSaving();
+        Object.keys(savingState).map((key, index) => {
+            const val = parseInt(savingState[key]);
+            savingState[key] = (Number.isInteger(val)) ? val : 0;;
+        });         
+        this.setState(savingState);
+    }
+
     componentWillUnmount = () => {
         clearInterval(this.timer);
+    }
+
+    componentDidUpdate = () => {
+        localStorage.setItem("TicketsStatus_state", JSON.stringify(this.state));
+    }
+
+    getSaving = () => {
+        return JSON.parse(localStorage.getItem("TicketsStatus_state"));
     }
 
     getContractStateInterval = () => {
