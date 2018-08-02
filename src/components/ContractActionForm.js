@@ -6,7 +6,7 @@ class ContractActionForm extends React.Component {
 
     callContract = (e) => {
         e.preventDefault();
-        
+
         const value = e.target.seed.value;
         e.target.seed.value = '';
         const func = this.props.content;
