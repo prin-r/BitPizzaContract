@@ -7,10 +7,6 @@ class TicketsStatus extends React.Component {
         numClaimedTickets: 0
     };
 
-    componentWillMount = () => {
-        this.timer = setInterval(this.getContractStateInterval, 5000);
-    }
-
     componentDidMount = () => {
         const savingState = this.getSaving();
         if (savingState) {
@@ -20,6 +16,8 @@ class TicketsStatus extends React.Component {
             });         
             this.setState(savingState);
         }
+
+        this.timer = setInterval(this.getContractStateInterval, 5000);
     }
 
     componentWillUnmount = () => {

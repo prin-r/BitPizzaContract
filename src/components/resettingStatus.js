@@ -17,10 +17,6 @@ class ResettingStatus extends React.Component {
         return 0;
     }
 
-    componentWillMount = () => {
-        this.timer = setInterval(this.getContractStateInterval, 5000);
-    }
-
     componentWillUnmount = () => {
         clearInterval(this.timer);
     }
@@ -39,6 +35,8 @@ class ResettingStatus extends React.Component {
             savingState.status = status;
             this.setState(savingState);
         }
+
+        this.timer = setInterval(this.getContractStateInterval, 5000);
     }
 
     componentDidUpdate = () => {

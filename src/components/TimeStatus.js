@@ -7,10 +7,6 @@ class TimeStatus extends React.Component {
         duration: 60
     };
 
-    componentWillMount = () => {
-        this.timer = setInterval(this.getContractStateInterval, 5000);
-    }
-
     componentDidMount = () => {
         const savingState = this.getSaving();
         if (savingState) {
@@ -23,6 +19,8 @@ class TimeStatus extends React.Component {
                 duration: (Number.isInteger(duration)) ? duration : 60
             }); 
         }
+
+        this.timer = setInterval(this.getContractStateInterval, 5000);
     }
 
     componentWillUnmount = () => {
