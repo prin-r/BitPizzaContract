@@ -8,7 +8,7 @@ import TimeStatus from './TimeStatus';
 import ContractActionForm from './ContractActionForm';
 import ContractActionButton from './ContractActionButton';
 
-export default class BitPage extends React.Component {
+class BitPage extends React.Component {
 
     state = {
       page: 'bit'
@@ -57,3 +57,5 @@ export default class BitPage extends React.Component {
         );
     }
 };
+
+export default BitPage;

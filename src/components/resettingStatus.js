@@ -15,7 +15,7 @@ class ResettingStatus extends React.Component {
             return (x - y > 0)? x - y : 0;
         }
         return 0;
-    }
+		}
 
     componentWillUnmount = () => {
         clearInterval(this.timer);
@@ -48,37 +48,37 @@ class ResettingStatus extends React.Component {
     }
 
     getContractStateInterval = () => {
-        let func = this.props.content();
-        if (func) {
-            func.then(result => {
-                this.setState({
-                    timeRemaining: this.subtractResult(result[0], result[1]),
-                    bitOpen: result[2],
-                    pizzaOpen: result[3],
-                    status: result[4]
-                });
-            }).catch(err => {
-                console.log(err);
-            });
-        }
+			let func = this.props.content();
+			if (func) {
+				func.then(result => {
+					this.setState({
+						timeRemaining: this.subtractResult(result[0], result[1]),
+						bitOpen: result[2],
+						pizzaOpen: result[3],
+						status: result[4]
+					});
+				}).catch(err => {
+					console.log(err);
+				});
+      }
     }
 
-    render() {
-        return(
-            <div className="row">
-                <div className="col text-center">
-                    <div className="p-1 mb-2 text-white">time remaining: {this.state.timeRemaining} sec</div>
-                </div>
-                <div className="col text-center">
-                    <div className="p-1 mb-2 text-white">BitStudio {(this.state.bitOpen)? "start session":"is waiting"}</div>
-                </div>
-                <div className="col text-center">
-                    <div className="p-1 mb-2 text-white">PizzaSeller {(this.state.pizzaOpen)? "start session":"is waiting"}</div>
-                </div>
-                <div className="col text-center">
-                    <div className="p-1 mb-2 text-white">session was {this.state.status}</div>
-                </div>
-            </div>
+		render() {
+			return (
+  <div className="row">
+    <div className="col text-center">
+      <div className="p-1 mb-2 text-white">time remaining: {this.state.timeRemaining} sec</div>
+    </div>
+    <div className="col text-center">
+      <div className="p-1 mb-2 text-white">BitStudio {(this.state.bitOpen)? "start session":"is waiting"}</div>
+    </div>
+    <div className="col text-center">
+      <div className="p-1 mb-2 text-white">PizzaSeller {(this.state.pizzaOpen)? "start session":"is waiting"}</div>
+    </div>
+    <div className="col text-center">
+      <div className="p-1 mb-2 text-white">session was {this.state.status}</div>
+    </div>
+  </div>
         )
     }
 

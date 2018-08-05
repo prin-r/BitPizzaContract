@@ -88,9 +88,9 @@ export default class ContractInterface extends React.Component {
     pizzaSellerRequestForResetContract = () => {
         console.log('resetting was start by Pizza');
         return (this.state.contract) ? this.state.contract.methods.pizzaSellerRequestForResetContract().send({ from: this.state.userAccount}) : undefined;
-    }
+    };
 
     render() {
         return (null);
-    };
+    }
 }

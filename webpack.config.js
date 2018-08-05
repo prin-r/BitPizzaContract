@@ -19,7 +19,8 @@ module.exports = {
         'css-loader',
         'sass-loader'
       ]
-    }]
+    }
+  ]
   },
   devtool: 'cheap-module-eval-source-map',
   devServer: {

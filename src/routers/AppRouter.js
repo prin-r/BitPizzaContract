@@ -2,8 +2,6 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-// import App from './../client/App';
-// import NavBar from './../components/NavBar';
 import BitPage from '../components/BitPage';
 import PizzaPage from '../components/PizzaPage'
 import NotFoundPage from '../components/NotFoundPage'

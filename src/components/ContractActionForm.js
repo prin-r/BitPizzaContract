@@ -13,7 +13,12 @@ class ContractActionForm extends React.Component {
         let action = undefined;
 
         if (func && value) {
-            action = func(value);
+            try {
+                action = func(value);
+            } catch (err) {
+                console.log(err);
+                return;
+            }
         } else {
             console.log('error! input or func is invalid');
             return;
@@ -27,14 +32,17 @@ class ContractActionForm extends React.Component {
                     return data;
                 }).on("error", (error) => {
                     console.log(error);
-                    return prevState;
                 });
             } catch (err) {
-                action.then(result => {
-                    console.log('result ',result);
-                }).catch(err => {
+                try {
+                    action.then(result => {
+                        console.log('result ',result);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                } catch (err) {
                     console.log(err);
-                });
+                }
             }
         });
     }
